@@ -1,0 +1,145 @@
+################
+# My i3 Config #
+################
+
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xset s 480 dpms 600 600 600
+
+#############
+# Variables #
+#############
+
+set $mod Ctrl
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+set $bgcolor-main #262d33
+set $bgcolor-alt #483935
+set $brcolor-main #ff7100
+set $brcolor-alt #a45425
+set $text-main #ffffff
+set $text-alt #d2b36f
+
+############
+# Keybinds #
+############
+
+# Launching Programs
+bindsym $mod+Return exec --no-startup-id xfce4-terminal
+bindsym $mod+d exec /home/horizon/.config/rofi/scripts/launcher_t1
+bindsym --whole-window button8 exec /home/horizon/.config/rofi/scripts/launcher_t1
+
+# Kill A Window
+bindsym $mod+Shift+q kill
+
+# Restart i3 Window Manager
+bindsym $mod+Shift+r restart
+
+# Enter Fullscreen Mode
+bindsym $mod+f fullscreen toggle
+
+# Changing Window Focus
+bindsym $mod+Left focus left
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+bindsym $mod+Down focus down
+
+# Moving Windows
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Down move down
+
+# Splitting Windows
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+# Switching Workspaces
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Scroll Through Workspaces
+bindsym $mod+Mod1+Left workspace prev
+Bindsym $mod+Mod1+Right workspace next
+
+# Moving Windows Between Workspaces
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Copy And Paste Keybinds
+bindsym Mod1+c exec wl-copy
+bindsym Mod1+v exec wl-paste
+
+# Lock The Screen
+bindsym $mod+x exec /home/horizon/.config/scripts/lock
+
+mode "resize" {
+    bindsym Left resize shrink width 2 px or 2 ppt
+    bindsym Up resize grow height 2 px or 2 ppt
+    bindsym Right resize grow width 2 px or 2 ppt
+    bindsym Down resize shrink height 2 px or 2 ppt
+
+    bindsym Return mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Volume Keys
+bindsym F10 exec --no-startup-id amixer -D pulse sset Master 5%+
+bindsym F9 exec --no-startup-id amixer -D pulse sset Master 5%-
+bindsym F8 exec --no-startup-id amixer sset Master toggle
+
+# Brightness Keys
+bindsym F7 exec --no-startup-id light -Ars "sysfs/backlight/intel_backlight" 5
+bindsym F6 exec --no-startup-id light -Urs "sysfs/backlight/intel_backlight" 5
+
+#############
+# Ricing i3 #
+#############
+
+# Set The Font
+font pango:Inconsolata 14
+
+# Set Transparency
+exec_always picom -f
+
+# Wallpaper
+exec_always feh --bg-fill /home/horizon/Pictures/Wallpapers/SpaceStation.jpg
+
+# Define Colors For Windows
+client.focused $brcolor-main $bgcolor-main $text-main $brcolor-alt
+client.unfocused $brcolor-main $bgcolor-alt $text-main $brcolor-alt
+client.focused_inactive $brcolor-main $bgcolor-alt $text-main $brcolor-alt
+client.urgent $brcolor-main $bgcolor-main $text-main $brcolor-alt
+
+# Setting Inner/Outer Gaps
+gaps outer 3
+gaps inner 6
+
+bar {
+    status_command i3blocks -c /home/horizon/.config/i3/i3blocks.conf
+}
